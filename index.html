@@ -22,38 +22,9 @@
 
     <p id="paymentResultText">Scan a QR code to initiate payment.</p>
 
-    <!-- Include the QR code scanning library -->
-    <script src="https://rawgit.com/dmla/jsqrcode/master/src/qr_packed.js"></script>
-
     <!-- Your QR code scanning logic -->
+    <script src="https://rawgit.com/dmla/jsqrcode/master/src/qr_packed.js"></script>
     <script>
-        const video = document.createElement('video');
-        const canvasElement = document.createElement('canvas');
-        const canvas = canvasElement.getContext('2d');
-
-        function startQRCodeScanner() {
-            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-                .then((stream) => {
-                    video.srcObject = stream;
-                    document.body.appendChild(video);
-                    video.play();
-                    requestAnimationFrame(scanQRCode);
-                })
-                .catch((err) => console.error(err));
-        }
-
-        function scanQRCode() {
-            canvasElement.width = video.videoWidth;
-            canvasElement.height = video.videoHeight;
-            canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
-            const imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
-            const code = jsQR(imageData.data, imageData.width, imageData.height);
-            if (code) {
-                handleQRCodeResult(code.data);
-            }
-            requestAnimationFrame(scanQRCode);
-        }
-
         function handleQRCodeResult(result) {
             if (result.includes("WeChat Pay")) {
                 document.getElementById('paymentResultText').innerText = "Payment received. Account details: Username: crazychloe Password: 1234";
@@ -63,11 +34,6 @@
                 document.getElementById('paymentResultText').innerText = "Unknown payment method. Please try again.";
             }
         }
-
-        // Start the QR code scanner when the page loads
-        window.onload = function () {
-            startQRCodeScanner();
-        };
     </script>
 </body>
 </html>
