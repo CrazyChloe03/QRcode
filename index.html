@@ -55,7 +55,13 @@
         }
 
         function handleQRCodeResult(result) {
-            document.getElementById('paymentResultText').innerText = "Payment received. Account details: " + result;
+            if (result.includes("WeChat Pay")) {
+                document.getElementById('paymentResultText').innerText = "Payment received. Account details: Username: crazychloe Password: 1234";
+            } else if (result.includes("Alipay")) {
+                document.getElementById('paymentResultText').innerText = "Payment received. Account details: Username: crazychloe Password: 1234";
+            } else {
+                document.getElementById('paymentResultText').innerText = "Unknown payment method. Please try again.";
+            }
         }
 
         // Start the QR code scanner when the page loads
