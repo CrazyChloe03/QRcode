@@ -4,24 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Scanner</title>
+    <title>Payment System</title>
 </head>
 <body>
-    <h1>Scan the QR Code</h1>
-    <p id="qrResultText">Scan the QR code to reveal the message.</p>
+    <h1>Choose a Payment Method</h1>
 
-    <!-- Display the QR code image -->
-    <img src="images/your-qrcode.png" alt="QR Code">
+    <!-- Display QR codes for WeChat Pay and Alipay -->
+    <div>
+        <h2>WeChat Pay</h2>
+        <img src="qrcodes/wechat-qrcode.png" alt="WeChat Pay QR Code">
+    </div>
 
-    <script>
-        function handleQRCodeResult(result) {
-            if (result === "Hi Bye") {
-                document.getElementById('qrResultText').innerText = "QR Code scanned successfully. Welcome!";
-            } else {
-                document.getElementById('qrResultText').innerText = "Invalid QR Code. Please try again.";
-            }
-        }
-    </script>
+    <div>
+        <h2>Alipay</h2>
+        <img src="qrcodes/alipay-qrcode.png" alt="Alipay QR Code">
+    </div>
+
+    <p id="paymentResultText">Scan a QR code to initiate payment.</p>
 
     <!-- Include the QR code scanning library -->
     <script src="https://rawgit.com/dmla/jsqrcode/master/src/qr_packed.js"></script>
@@ -55,8 +54,14 @@
             requestAnimationFrame(scanQRCode);
         }
 
+        function handleQRCodeResult(result) {
+            document.getElementById('paymentResultText').innerText = "Payment received. Account details: " + result;
+        }
+
         // Start the QR code scanner when the page loads
-        window.onload = startQRCodeScanner;
+        window.onload = function () {
+            startQRCodeScanner();
+        };
     </script>
 </body>
 </html>
