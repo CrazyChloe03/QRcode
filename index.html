@@ -15,7 +15,11 @@
 
     <script>
         function handleQRCodeResult(result) {
-            document.getElementById('qrResultText').innerText = result;
+            if (result === "Hi Bye") {
+                document.getElementById('qrResultText').innerText = "QR Code scanned successfully. Welcome!";
+            } else {
+                document.getElementById('qrResultText').innerText = "Invalid QR Code. Please try again.";
+            }
         }
     </script>
 
@@ -24,7 +28,35 @@
 
     <!-- Your QR code scanning logic -->
     <script>
-        // ... (as provided in the previous example)
+        const video = document.createElement('video');
+        const canvasElement = document.createElement('canvas');
+        const canvas = canvasElement.getContext('2d');
+
+        function startQRCodeScanner() {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+                .then((stream) => {
+                    video.srcObject = stream;
+                    document.body.appendChild(video);
+                    video.play();
+                    requestAnimationFrame(scanQRCode);
+                })
+                .catch((err) => console.error(err));
+        }
+
+        function scanQRCode() {
+            canvasElement.width = video.videoWidth;
+            canvasElement.height = video.videoHeight;
+            canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
+            const imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+            const code = jsQR(imageData.data, imageData.width, imageData.height);
+            if (code) {
+                handleQRCodeResult(code.data);
+            }
+            requestAnimationFrame(scanQRCode);
+        }
+
+        // Start the QR code scanner when the page loads
+        window.onload = startQRCodeScanner;
     </script>
 </body>
 </html>
