@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+</head>
+<body>
+    <h1>Scan the QR Code</h1>
+    <p id="qrResultText">Scan the QR code to reveal the message.</p>
+
+    <!-- Display the QR code image -->
+    <img src="images/your-qrcode.png" alt="QR Code">
+
+    <script>
+        function handleQRCodeResult(result) {
+            document.getElementById('qrResultText').innerText = result;
+        }
+    </script>
+
+    <!-- Include the QR code scanning library -->
+    <script src="https://rawgit.com/dmla/jsqrcode/master/src/qr_packed.js"></script>
+
+    <!-- Your QR code scanning logic -->
+    <script>
+        // ... (as provided in the previous example)
+    </script>
+</body>
+</html>
